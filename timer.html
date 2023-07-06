@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timer Example</title>
+  <style>
+    .timer {
+      font-size: 48px;
+      text-align: center;
+      margin-top: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="timer" id="timer">00d 00h 00m 00s</div>
+
+  <script>
+    function startTimer(duration, display) {
+      var timer = duration, days, hours, minutes, seconds;
+      setInterval(function () {
+        days = parseInt(timer / (24 * 60 * 60), 10);
+        hours = parseInt((timer % (24 * 60 * 60)) / (60 * 60), 10);
+        minutes = parseInt((timer % (60 * 60)) / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        days = days < 10 ? "0" + days : days;
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+
+        if (--timer < 0) {
+          timer = duration;
+        }
+      }, 1000);
+    }
+
+    window.onload = function () {
+      var launchDate = new Date('Aug 6, 2023 00:00:00');
+      var currentDate = new Date();
+      var timeDifference = launchDate - currentDate; // Difference in milliseconds
+
+      var duration = Math.ceil(timeDifference / 1000); // Convert to seconds and round up
+      var display = document.getElementById('timer');
+      startTimer(duration, display);
+    };
+  </script>
+</body>
+</html>
